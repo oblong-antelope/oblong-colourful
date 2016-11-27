@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+    <canvas id="myChart" width="200" height="95vh"></canvas>
+    <script>
+
+        $(document).ready(function(){
+            getDataSet();
+        });
+
+        var data;
+
+        function getDataSet(){
+            $.post(/*'http://oblong-relentless.herokuapp.com/'*/'http://localhost:1140', {origin:'200'}, function(response){
+                var rcvd = $.parseJSON(response);
+                data = rcvd;
+
+
+
+
+                var options = {
+                    onClick: clickHandler,
+                    layout:{
+                        padding:20
+                    },
+                    tooltips:{
+                        titleFontSize:24,
+                        bodyFontSize:24,
+                        callbacks:{
+                            label:function(e, d){
+                                //console.log(e.datasetIndex);
+                                //console.log(d.datasets[e.datasetIndex]);
+                                return  d.datasets[e.datasetIndex].label;
+                            }
+                        }
+                    },
+                    legend:{
+                        display:false
+                    },
+                    scales: {
+                        xAxes: [{
+                            display:false
+                            /*ticks: {
+                             min: 1,
+                             max: 100
+                             }*/
+                        }],
+                        yAxes: [{
+                            display:false
+                        }]
+                    }
+                };
+
+                var ctx = document.getElementById("myChart");
+
+                var myBubbleChart = new Chart(ctx,{
+                    type: 'bubble',
+                    data: data,
+                    options: options
+                });
+
+                function clickHandler(e, da){
+                    myBubbleChart.clear();
+                    myBubbleChart.destroy();
+                    $('canvas').html('');
+                    getDataSet();
+                    console.log(da[0]._datasetIndex);
+                }
+            });
+        }
+
+    </script>
+
+
+</body>
+</html>

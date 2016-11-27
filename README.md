@@ -1,1 +1,1 @@
-# oblong-colourful
+# Auxiliary Graph Provider for Oblong Project
