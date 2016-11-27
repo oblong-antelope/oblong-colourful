@@ -16,7 +16,7 @@
         var data;
 
         function getDataSet(){
-            $.post(/*'http://oblong-relentless.herokuapp.com/'*/'http://localhost:1140', {origin:'200'}, function(response){
+            $.post('http://oblong-relentless.herokuapp.com/', {origin:'200'}, function(response){
                 var rcvd = $.parseJSON(response);
                 data = rcvd;
 
