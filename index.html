@@ -22,7 +22,7 @@
             console.log(rcvd);
 
             var options = {
-                //onClick: clickHandler,
+                onClick: clickHandler,
                 layout:{
                     padding:20
                 },
@@ -72,7 +72,7 @@
             });
 
             function clickHandler(e, da){
-                myBubbleChart.clear();
+                /*myBubbleChart.clear();
                 myBubbleChart.destroy();
                 $('canvas').html('');
                 if (e.clientX > 1000 && e.clientY > 500) {
@@ -88,7 +88,7 @@
                     console.log('bl');
                     getDataSet(x1, y1, (x1 + x2) / 2, (y1 + y2) / 2);
                 }
-                console.log(e);
+                console.log(e);*/
                 console.log(da[0]._datasetIndex);
             }
         });
