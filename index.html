@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="hammer.min.js"></script>
+    <script src="chartjs-plugin-zoom.min.js"></script>
 </head>
 <body>
 <canvas id="myChart" width="200" height="95vh"></canvas>
@@ -20,7 +22,7 @@
             console.log(rcvd);
 
             var options = {
-                onClick: clickHandler,
+                //onClick: clickHandler,
                 layout:{
                     padding:20
                 },
@@ -49,6 +51,14 @@
                     yAxes: [{
                         display:false
                     }]
+                },
+                pan: {
+                    enabled: true,
+                    mode: 'xy'
+                },
+                zoom: {
+                    enabled: true,
+                    mode: 'xy'
                 }
             };
 
