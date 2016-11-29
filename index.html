@@ -66,10 +66,10 @@
                 $('canvas').html('');
                 if (e.clientX > 1000 && e.clientY > 500) {
                     console.log('br');
-                    getDataSet((x1 + x2) / 2, (y1 + y2) / 2, x2, y2);
+                    getDataSet((x1 + x2) / 2, y1, x2, (y1 + y2) / 2);
                 } else if (e.clientX > 1000 && e.clientY < 500) {
                     console.log('ur');
-                    getDataSet((x1 + x2) / 2, y1, x2, (y1 + y2) / 2);
+                    getDataSet((x1 + x2) / 2, (y1 + y2) / 2, x2, y2);
                 } else if (e.clientY < 500) {
                     console.log('ul');
                     getDataSet(x1, (y1 + y2) / 2, (x1 + x2) / 2, y2);
