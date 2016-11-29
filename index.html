@@ -6,75 +6,84 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
-    <canvas id="myChart" width="200" height="95vh"></canvas>
-    <script>
+<canvas id="myChart" width="200" height="95vh"></canvas>
+<script>
+    $(document).ready(function(){
+        getDataSet(0, 0, 40, 25);
+    });
 
-        $(document).ready(function(){
-            getDataSet();
-        });
+    function getDataSet(x1, y1, x2, y2){
+        $.post('http://oblong-relentless.herokuapp.com/', {x1:x1, y1:y1, x2:x2, y2:y2}, function(response){
+            var rcvd = $.parseJSON(response);
+            var data = rcvd;
 
-        var data;
+            console.log(rcvd);
 
-        function getDataSet(){
-            $.post('http://oblong-relentless.herokuapp.com/', {origin:'200'}, function(response){
-                var rcvd = $.parseJSON(response);
-                data = rcvd;
-
-
-
-
-                var options = {
-                    onClick: clickHandler,
-                    layout:{
-                        padding:20
-                    },
-                    tooltips:{
-                        titleFontSize:24,
-                        bodyFontSize:24,
-                        callbacks:{
-                            label:function(e, d){
-                                //console.log(e.datasetIndex);
-                                //console.log(d.datasets[e.datasetIndex]);
-                                return  d.datasets[e.datasetIndex].label;
-                            }
+            var options = {
+                onClick: clickHandler,
+                layout:{
+                    padding:20
+                },
+                tooltips:{
+                    titleFontSize:24,
+                    bodyFontSize:24,
+                    callbacks:{
+                        label:function(e, d){
+                            //console.log(e.datasetIndex);
+                            //console.log(d.datasets[e.datasetIndex]);
+                            return  d.datasets[e.datasetIndex].label;
                         }
-                    },
-                    legend:{
-                        display:false
-                    },
-                    scales: {
-                        xAxes: [{
-                            display:false
-                            /*ticks: {
-                             min: 1,
-                             max: 100
-                             }*/
-                        }],
-                        yAxes: [{
-                            display:false
-                        }]
                     }
-                };
-
-                var ctx = document.getElementById("myChart");
-
-                var myBubbleChart = new Chart(ctx,{
-                    type: 'bubble',
-                    data: data,
-                    options: options
-                });
-
-                function clickHandler(e, da){
-                    myBubbleChart.clear();
-                    myBubbleChart.destroy();
-                    $('canvas').html('');
-                    getDataSet();
-                    console.log(da[0]._datasetIndex);
+                },
+                legend:{
+                    display:false
+                },
+                scales: {
+                    xAxes: [{
+                        display:false
+                        /*ticks: {
+                         min: 1,
+                         max: 100
+                         }*/
+                    }],
+                    yAxes: [{
+                        display:false
+                    }]
                 }
-            });
-        }
+            };
 
-    </script>
+            var ctx = document.getElementById("myChart");
+
+            var myBubbleChart = new Chart(ctx,{
+                type: 'bubble',
+                data: data,
+                options: options
+            });
+
+            function clickHandler(e, da){
+                myBubbleChart.clear();
+                myBubbleChart.destroy();
+                $('canvas').html('');
+                if (e.clientX > 1000 && e.clientY > 500) {
+                    console.log('br');
+                    getDataSet((x1 + x2) / 2, (y1 + y2) / 2, x2, y2);
+                } else if (e.clientX > 1000 && e.clientY < 500) {
+                    console.log('ur');
+                    getDataSet((x1 + x2) / 2, y1, x2, (y1 + y2) / 2);
+                } else if (e.clientY < 500) {
+                    console.log('ul');
+                    getDataSet(x1, (y1 + y2) / 2, (x1 + x2) / 2, y2);
+                } else {
+                    console.log('bl');
+                    getDataSet(x1, y1, (x1 + x2) / 2, (y1 + y2) / 2);
+                }
+                console.log(e);
+                console.log(da[0]._datasetIndex);
+            }
+        });
+    }
+
+</script>
 
 
 </body>
