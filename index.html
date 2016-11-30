@@ -15,7 +15,7 @@
     });
 
     function getDataSet(x1, y1, x2, y2){
-        $.post('http://oblong-relentless.herokuapp.com/', {x1:x1, y1:y1, x2:x2, y2:y2}, function(response){
+        $.post('http://oblong-onslaught.herokuapp.com/', {x1:x1, y1:y1, x2:x2, y2:y2, personIdx:22}, function(response){
             var rcvd = $.parseJSON(response);
             var data = rcvd;
 
